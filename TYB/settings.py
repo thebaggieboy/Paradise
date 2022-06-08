@@ -26,7 +26,7 @@ SECRET_KEY = '(v5car8_oqr@b^sr-*pspw(!hf#hr553p6+6lk^@76^hdoo7mc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['paradise-tyb-app.herokuapp.com/', 'localhost', '127.0.0.1', '0.0.0.0']
+ALLOWED_HOSTS = ['paradise-tyb-app.herokuapp.com', 'localhost', '127.0.0.1', '0.0.0.0']
 
 
 # Application definition
