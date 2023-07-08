@@ -1,7 +1,7 @@
 from django.db import models
 from django.shortcuts import reverse # Create your models here.
 from django.conf import settings
-
+from django.utils.text import slugify
 User = settings.AUTH_USER_MODEL
 
 # Create your models here.
