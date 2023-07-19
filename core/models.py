@@ -61,7 +61,9 @@ class Product(models.Model):
 
 class OrderProduct(models.Model):
     # Extending the Product model to create another model with all the product
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    orders = models.ForeignKey('Order', on_delete=models.CASCADE, null=True, blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(null=True, default=1)
     ordered = models.BooleanField(default=False)

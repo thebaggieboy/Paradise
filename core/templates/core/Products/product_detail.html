@@ -1,3 +1,4 @@
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -6,150 +7,253 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{products.name}}</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <!--      <link rel="stylesheet" href="{% static 'dependencies/bootstrap-5/css/bootstrap.min.css' %}"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'dependencies/bootstrap-5/css/bootstrap.min.css' %}"> 
     <link rel="stylesheet" href="{% static 'dependencies/bootstrap-icons/font/bootstrap-icons.css' %}">
     <link rel="stylesheet" href="{% static 'dependencies/slick-1.8.1/slick/slick-theme.css' %}">
     <link rel="stylesheet" href="{% static 'dependencies/fontawesome-free-5.13.1-web/css/all.min.css' %}">
     <link rel="stylesheet"  href="{% static 'core/css/product_detail.css' %}">
 </head>
 <body>
-     
-    <nav id="nav" class="navbar  navbar-expand navbar-light bg-light" >
-          
-        <h1 href="#" class="navbar-brand mb-0 ps-2  d-block center" >Paradise</h1>
-        
-        <div class="container-fluid  px-1"> 
-             
-             
-              <ul class="navbar-nav   center ">    
-                <ul class="save-n-cart rounded navbar-nav "> 
-                
-                    <li class="nav-item "> 
-                        <a href="{% url 'core:cart' %}" class="d-inline-block cart text-primary nav-link" >
-                           {% if order_product.quantity %}
-                           <span class="count">{{order_product.quantity}}</span><i class="fas fa-cart  "></i> Cart
-                           {% else %}
-                           <span class="count">0</span><i class="fas fa-cart  "></i> Cart
-                           {% endif %}</a>
-                     </li>   
-              
-               </ul>
-                
-                    <li class="nav-item ">
-                        <a href="{% url 'core:index' %}" class="nav-link d-inline-block"><i class="bi bi-house "></i> Home</a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a href="{% url 'core:list' %}" class="nav-link d-inline-block"><i class="bi bi-sliders "></i> Menu</a>
-                    </li>
-                </ul>
+   
+  <nav class="navbar bg-body-tertiary fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" style="" href="{% url 'core:index' %}">GENESIS</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">GENESIS</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link " aria-current="page" href="{% url 'core:index' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'core:list' %}">Shop Merch</a>
+            </li>
             
-          </div> 
-           </nav> 
 
-          
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'account_login' %}">Account</a>
+             
+              </li>
+              
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+             
+              </li>
+              {% endif %}
+
+              <hr><br>
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="btn btn-danger btn-block" href="{% url 'account_logout' %}">Logout</a>
+             
+              </li>
+              {% endif %}
+
+               
+          </ul>
+         
+        </div>
+      </div>
+    </div>
+  </nav>
 
 
-    <main class="container-fluid">
-        {% if messages %}
+  <br><br><br><br>
+         
+  <main class="container-fluid">
+  {% if messages %}
         
         {% for message in messages %}
           <div style="font-size: 16px; background-color: aquamarine;" class="alert alert-{{ message.tags }}">{{ message }}</div>
         {% endfor %}
   
     {% endif %}
-        <h1 class="navbar-brand text-muted">{{product.name}} Info</h1>
-        <div class="grid"> 
 
-            <!-- product display -->
-            
-            <div class="section1 imageDisplay">
-            
-
-                <div id="carouselExampleFade" class=" carousel carousel-dark slide carousel-fade" data-bs-ride="carousel" >
-                    <ol class="carousel-indicators">
-                        <li data-bs-target="#carouselExampleFade" data-bs-slide-to="0" class="active"></li>
-                        <li data-bs-target="#carouselExampleFade" data-bs-slide-to="1"></li>
-                        <li data-bs-target="#carouselExampleFade" data-bs-slide-to="2"></li>
-                      </ol>
-                    <div class="carousel-inner">
-                      <div class="carousel-item active">
-                        <img src="{{product.picture.url}}" class=" d-block" alt="">
-
-                    </div>
-                      <div class="carousel-item">
-                      <img src="{{product.picture.url}}" class="d-block" alt="">
-
-                    </div>
-                      <div class="carousel-item">
-                        <img src="{{product.picture.url}}" class="d-block" alt="">
-
-                    </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-bs-slide="prev">
-                      <span class="fas fa-chevron-left fa-2x text-dark" aria-hidden="true"></span>
-                      <span class="visually-hidden">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-bs-slide="next">
-                      <span class="fas fa-chevron-right fa-2x text-dark" aria-hidden="true"></span>
-                      <span class="visually-hidden">Next</span>
-                    </a>
-                  </div>
-                      
-            </div>            
-            <!--  prefernces -->
-            
-     <div class="cta container-fluid ">
-        
-       <div class="grid">   
-            <p class="product-name">{{product.name}}</p>             
-            <p class="price">${{product.price}}  <span class="fs-5 text-muted">each</span></p>
-        </div> <br/>
-        <br>
-
-          
-                
-    </div>
-
-            
-    
-  <br>
-    
-    <!-- details -->
-    
-    <div class="section4 ">
-
-       <div class="details">
-           <h3 class=" ">Details <button class="btn btn-outline-dark toggler"><i class="fas fa-plus"></i></button></h3>
-    
-           <!-- extra info on product -->
-
-           <div class="detail-content">
-               
-               <div class="extra-info">
-                    {{product.details}}
-               </div>
-               <hr>
-                <div class="product-size">
-                    <h3 class="fs-6">Size + Fit</h3>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><p class="" style="font-size: 30px;">{{product.size}}</p></li>
-                    </ul>
-                </div>                       
-           </div>
-        </div>     
-        
+    <div class="container p-3 pt-1 mt-1 d-flex justify-content-center text-center">
+      <ul class="nav nav-underline text-center">
+        <li class="nav-item text-center">
+          <a class="nav-link active" aria-current="page" href="{% url 'core:cart' %}">Cart</a>
+        </li>
      
-         
+    
+      </ul>
+    </div> <br>
+    <h1 class="navbar-brand text-muted">Product Info</h1>
+    <div class="grid"> 
+
+        <!-- product display -->
         
+        <div class="section1 imageDisplay">
+        
+
+            <div id="carouselExampleFade" class=" carousel carousel-dark slide carousel-fade" data-bs-ride="carousel" >
+                <ol class="carousel-indicators">
+                    <li data-bs-target="#carouselExampleFade" data-bs-slide-to="0" class="active"></li>
+                    <li data-bs-target="#carouselExampleFade" data-bs-slide-to="1"></li>
+                    <li data-bs-target="#carouselExampleFade" data-bs-slide-to="2"></li>
+                  </ol>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="{{product.picture.url}}" class=" d-block" alt="">
+
+                </div>
+                  <div class="carousel-item">
+                  <img src="{{product.picture.url}}" class="d-block" alt="">
+
+                </div>
+                  <div class="carousel-item">
+                    <img src="{{product.picture.url}}" class="d-block" alt="">
+
+                </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-bs-slide="prev">
+                  <span class="fas fa-chevron-left fa-2x text-dark" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-bs-slide="next">
+                  <span class="fas fa-chevron-right fa-2x text-dark" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </a>
+              </div>
+                  
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+        
+        <!--  prefernces -->
+        
+ <div class="cta container-fluid ">
+    
+   <div class="grid">   
+        <p class="product-name">{{product.name}}</p>
+         
+        <p class="price">${{product.price}}  <span class="fs-5 text-muted">each</span></p>
+
+        <div class="Rating">
+            <h5>Ratings</h5>
+        <div class="fs-4 my-0">
+            <i class="bi bi-star"></i>
+            <i class="bi bi-star"></i>
+            <i class="bi bi-star"></i>
+            <i class="bi bi-star"></i>
+            <i class="bi bi-star"></i>
+         </div>
+    
+        </div>
+        <div class="product-colors ">
+            <h5>Select Quantity*</h5>
+            <div class="quantity">
+           
+            </div>
+        </div>
+       
+        <div class="product-sizes ">
+            <h5> Select Size*</h5>
+
+               <div class="L ">L</div>
+               <div class="XL">XL</div>
+               <div class="S">S</div>
+               <div class="XS">XS</div> 
+
+        </div>
+    </div>   
+    <a href="{{product.get_add_to_cart_url}}" class="btn-dark btn-lg  center cta-btn">Add To Cart</a>
+      
+            
+</div>
+
+        
+
+<!-- testimonials -->
+
+<div class="section3 user-reviews">
+    <h3 class="sectionHeader text-primary">User Reviews</h3>
+
+    <div class="reviews shadow-sm">
+        <div class="review">
+            <h4 class="username">John doe</h4>
+            <p class="comment">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, laudantium?</p>
+        </div>
+        <div class="review">
+            <h4 class="username">John doe</h4>
+            <p class="comment">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, laudantium?</p>
+        </div>
+     
     </div>
 
-    <a href='{{product.get_add_to_cart_url}}' class=" btn btn-dark btn-block">Add To Cart</a> 
-</div>
-        
-    </main>
+    <div class="addReview">
+        <h3 class="sectionHeader mb-3">Leave a review...</h3>
+     <textarea name="new-review" id="new-review" cols="50" rows="5" placeholder="Say Something..."></textarea>
+
+    </div>
 
 </div>
+
+<!-- details -->
+
+<div class="section4 ">
+
+   <div class="details">
+       <h3 class=" ">Product Details <button class="btn btn-outline-dark toggler"><i class="fas fa-plus"></i></button></h3>
+
+       <!-- extra info on product -->
+
+       <div class="detail-content">
+           
+           <div class="extra-info">
+
+           </div>
+              <div class="product-care">
+                  <h3 class="fs-6">Content + Care</h3>
+                  <ul class="list-group list-group-flush">
+                     <p class="lead">{{product.details}}</p>
+                  </ul>
+                </div>
+            <div class="product-size">
+                <h3 class="fs-6">Size + Fit</h3>
+                <ul class="list-group list-group-flush">
+       <p class="lead">{{product.size}}</p>
+                </ul>
+            </div>                       
+       </div>
+    </div>     
+    
+   
+    
+</div>
+
+
+</div>
+
+    
+</main>
+
+
+
+
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
 <script src=" {% static  'dependencies/bootstrap-5/js/bootstrap.min.js' %}"></script>
 <script src=" {% static  'dependencies/Jquery/jquery-3.5.1.min.js' %}"></script>
 <script src=" {% static  'dependencies/slick-1.8.1/slick/slick.min.js' %}"></script>
