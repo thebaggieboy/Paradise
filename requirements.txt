@@ -1,6 +1,5 @@
 asgiref==3.4.1
 certifi==2021.5.30
-cffi==1.14.6
 charset-normalizer==2.0.3
 cryptography==3.4.7
 defusedxml==0.7.1
@@ -11,8 +10,7 @@ django-filter==2.4.0
 gunicorn==20.1.0
 idna==3.2
 oauthlib==3.1.1
-Pillow==8.3.2
-psycopg2-binary==2.9.1
+Pillow==9.3.0
 pycparser==2.20
 PyJWT==2.1.0
 python3-openid==3.2.0
